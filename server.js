@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(cors());
 
 // ── SERVE FRONTEND ────────────────────────────────────────
-app.use(express.static(path.join(__dirname, "../frontend")));
+app.use(express.static(path.join(__dirname, "frontend")));
 
 // ── API ROUTES ────────────────────────────────────────────
 app.use("/tasks", taskRoutes);
@@ -23,8 +23,8 @@ app.use("/users", authRoutes);       // frontend uses /users/login etc.
 app.use("/api/auth", authRoutes);    // clean API path
 
 // ── SPA FALLBACK ──────────────────────────────────────────
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../frontend/index.html"));
+app.use((req, res) => {
+  res.sendFile(path.join(__dirname, "frontend/index.html"));
 });
 
 // ── START ─────────────────────────────────────────────────
