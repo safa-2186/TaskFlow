@@ -25,6 +25,7 @@ app.use("/users", authRoutes);       // frontend uses /users/login etc.
 app.use("/api/auth", authRoutes);    // clean API path
 
 // ── SPA FALLBACK ──────────────────────────────────────────
+app.use(express.static(path.join(__dirname, "..", "frontend")));
 app.use((req, res) => {
   res.sendFile(path.join(__dirname, "..", "frontend", "index.html"));
 });
