@@ -4,32 +4,16 @@
       "id": 1,
       "user_name": "admin",
       "email": "admin@taskflow.io",
-      "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+      "password": "$2a$10$y3YDMzijVi6DgeV0J4jsS.CRZju7Q6tqFT5./7w/ZknN1QmsxLxlW",
       "role": "admin",
       "created_at": "2025-01-15T10:00:00.000Z"
-    },
-    {
-      "id": 2,
-      "user_name": "Alice",
-      "email": "alice@example.com",
-      "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-      "role": "user",
-      "created_at": "2025-03-20T08:30:00.000Z"
-    },
-    {
-      "id": 3,
-      "user_name": "Bob",
-      "email": "bob@example.com",
-      "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
-      "role": "user",
-      "created_at": "2025-04-10T14:20:00.000Z"
     },
     {
       "id": 4,
       "user_name": "safa",
       "email": "safa.bouguilime@gmail.com",
       "password": "$2a$10$y3YDMzijVi6DgeV0J4jsS.CRZju7Q6tqFT5./7w/ZknN1QmsxLxlW",
-      "role": "user",
+      "role": "admin",
       "created_at": "2026-06-25T14:56:01.591Z"
     }
   ],
@@ -95,24 +79,26 @@
       "created_at": "2025-01-20T10:00:00.000Z"
     },
     {
-      "id": 9,
+      "id": 26,
       "user_id": 4,
-      "title": "first task",
+      "title": "rhedfvjerubr",
       "status": "todo",
       "priority": "Medium",
-      "assignee": "No one",
-      "due_date": null,
-      "created_at": "2026-06-27T15:59:03.703Z"
+      "assignee": "Hafssa",
+      "due_date": "2026-06-29",
+      "project_id": 2,
+      "created_at": "2026-06-29T11:42:15.062Z"
     },
     {
-      "id": 10,
+      "id": 27,
       "user_id": 4,
-      "title": "task",
+      "title": "hbhrefnd",
       "status": "todo",
       "priority": "Medium",
-      "assignee": "No one",
-      "due_date": null,
-      "created_at": "2026-06-27T15:59:10.544Z"
+      "assignee": "Adam",
+      "due_date": "2026-07-01",
+      "project_id": 5,
+      "created_at": "2026-06-29T11:47:26.139Z"
     }
   ],
   "activity_log": [
@@ -217,11 +203,356 @@
       "user_id": 4,
       "action": "Created task \"task\"",
       "created_at": "2026-06-27T15:59:10.547Z"
+    },
+    {
+      "id": 18,
+      "user_id": 4,
+      "action": "Created project \"TaskFlow\"",
+      "created_at": "2026-06-28T20:25:04.575Z"
+    },
+    {
+      "id": 19,
+      "user_id": 4,
+      "action": "Created project \"CodeArena\"",
+      "created_at": "2026-06-28T20:26:23.283Z"
+    },
+    {
+      "id": 20,
+      "user_id": 4,
+      "action": "Updated task \"first task\"",
+      "created_at": "2026-06-28T20:26:35.317Z"
+    },
+    {
+      "id": 21,
+      "user_id": 4,
+      "action": "Deleted task \"task\"",
+      "created_at": "2026-06-28T20:26:37.091Z"
+    },
+    {
+      "id": 22,
+      "user_id": 4,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-28T20:26:38.279Z"
+    },
+    {
+      "id": 23,
+      "user_id": 4,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-28T20:34:29.052Z"
+    },
+    {
+      "id": 24,
+      "user_id": 4,
+      "action": "Updated task \"first task\"",
+      "created_at": "2026-06-28T20:34:45.825Z"
+    },
+    {
+      "id": 25,
+      "user_id": 4,
+      "action": "Created task \"first path\"",
+      "created_at": "2026-06-28T20:35:50.282Z"
+    },
+    {
+      "id": 26,
+      "user_id": 4,
+      "action": "Updated task \"first path\"",
+      "created_at": "2026-06-28T20:36:00.868Z"
+    },
+    {
+      "id": 27,
+      "user_id": 4,
+      "action": "Updated task \"first path\"",
+      "created_at": "2026-06-28T20:36:19.005Z"
+    },
+    {
+      "id": 28,
+      "user_id": 4,
+      "action": "Updated task \"first path\"",
+      "created_at": "2026-06-28T20:37:03.374Z"
+    },
+    {
+      "id": 29,
+      "user_id": 4,
+      "action": "Deleted task \"first path\"",
+      "created_at": "2026-06-28T20:41:10.730Z"
+    },
+    {
+      "id": 30,
+      "user_id": 4,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-28T20:41:12.471Z"
+    },
+    {
+      "id": 31,
+      "user_id": 4,
+      "action": "Created project \"school\"",
+      "created_at": "2026-06-28T21:32:25.288Z"
+    },
+    {
+      "id": 32,
+      "user_id": 4,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-28T21:32:52.028Z"
+    },
+    {
+      "id": 33,
+      "user_id": 4,
+      "action": "Created project \"hdguydrhgdnj\"",
+      "created_at": "2026-06-28T22:06:30.966Z"
+    },
+    {
+      "id": 34,
+      "user_id": 4,
+      "action": "Deleted project \"hdguydrhgdnj\"",
+      "created_at": "2026-06-28T22:37:25.205Z"
+    },
+    {
+      "id": 35,
+      "user_id": 4,
+      "action": "Deleted project \"school\"",
+      "created_at": "2026-06-28T22:37:27.258Z"
+    },
+    {
+      "id": 36,
+      "user_id": 4,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-28T23:08:46.111Z"
+    },
+    {
+      "id": 37,
+      "user_id": 4,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-28T23:20:30.775Z"
+    },
+    {
+      "id": 38,
+      "user_id": 4,
+      "action": "Updated task \"first task\"",
+      "created_at": "2026-06-28T23:20:42.522Z"
+    },
+    {
+      "id": 39,
+      "user_id": 4,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-28T23:21:02.927Z"
+    },
+    {
+      "id": 40,
+      "user_id": 4,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-28T23:21:04.552Z"
+    },
+    {
+      "id": 41,
+      "user_id": 4,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-28T23:21:23.243Z"
+    },
+    {
+      "id": 42,
+      "user_id": 4,
+      "action": "Updated task \"first task\"",
+      "created_at": "2026-06-28T23:21:32.422Z"
+    },
+    {
+      "id": 43,
+      "user_id": 4,
+      "action": "Created task \"taskkk\"",
+      "created_at": "2026-06-29T10:25:11.992Z"
+    },
+    {
+      "id": 44,
+      "user_id": 4,
+      "action": "Created task \"hhfuvuhjf\"",
+      "created_at": "2026-06-29T10:28:49.176Z"
+    },
+    {
+      "id": 45,
+      "user_id": 4,
+      "action": "Updated task \"hhfuvuhjf\"",
+      "created_at": "2026-06-29T10:28:58.559Z"
+    },
+    {
+      "id": 46,
+      "user_id": 4,
+      "action": "Created task \"hghgrnjdg\"",
+      "created_at": "2026-06-29T10:34:24.183Z"
+    },
+    {
+      "id": 47,
+      "user_id": 4,
+      "action": "Created task \"jhdhhjsdfn\"",
+      "created_at": "2026-06-29T10:47:03.925Z"
+    },
+    {
+      "id": 48,
+      "user_id": 4,
+      "action": "Created task \"hdsqhdbzed\"",
+      "created_at": "2026-06-29T10:49:20.035Z"
+    },
+    {
+      "id": 49,
+      "user_id": 4,
+      "action": "Updated task \"hdsqhdbzed\"",
+      "created_at": "2026-06-29T10:49:30.159Z"
+    },
+    {
+      "id": 50,
+      "user_id": 4,
+      "action": "Created task \"ghghtf\"",
+      "created_at": "2026-06-29T10:56:32.206Z"
+    },
+    {
+      "id": 51,
+      "user_id": 4,
+      "action": "Created task \"hhrfghrghdre\"",
+      "created_at": "2026-06-29T11:04:20.872Z"
+    },
+    {
+      "id": 52,
+      "user_id": 4,
+      "action": "Updated task \"hhrfghrghdre\"",
+      "created_at": "2026-06-29T11:04:28.423Z"
+    },
+    {
+      "id": 53,
+      "user_id": 4,
+      "action": "Created task \"rtgth\"",
+      "created_at": "2026-06-29T11:29:00.348Z"
+    },
+    {
+      "id": 54,
+      "user_id": 4,
+      "action": "Deleted project \"TaskFlow\"",
+      "created_at": "2026-06-29T11:36:55.859Z"
+    },
+    {
+      "id": 55,
+      "user_id": 4,
+      "action": "Created task \"fgfgbgfb\"",
+      "created_at": "2026-06-29T11:41:39.342Z"
+    },
+    {
+      "id": 56,
+      "user_id": 4,
+      "action": "Deleted task \"fgfgbgfb\"",
+      "created_at": "2026-06-29T11:41:48.481Z"
+    },
+    {
+      "id": 57,
+      "user_id": 4,
+      "action": "Deleted task \"rtgth\"",
+      "created_at": "2026-06-29T11:41:50.003Z"
+    },
+    {
+      "id": 58,
+      "user_id": 4,
+      "action": "Deleted task \"hhrfghrghdre\"",
+      "created_at": "2026-06-29T11:41:51.456Z"
+    },
+    {
+      "id": 59,
+      "user_id": 4,
+      "action": "Deleted task \"ghghtf\"",
+      "created_at": "2026-06-29T11:41:52.716Z"
+    },
+    {
+      "id": 60,
+      "user_id": 4,
+      "action": "Deleted task \"hdsqhdbzed\"",
+      "created_at": "2026-06-29T11:41:55.726Z"
+    },
+    {
+      "id": 61,
+      "user_id": 4,
+      "action": "Deleted task \"jhdhhjsdfn\"",
+      "created_at": "2026-06-29T11:41:57.482Z"
+    },
+    {
+      "id": 62,
+      "user_id": 4,
+      "action": "Deleted task \"hghgrnjdg\"",
+      "created_at": "2026-06-29T11:41:58.267Z"
+    },
+    {
+      "id": 63,
+      "user_id": 4,
+      "action": "Deleted task \"hhfuvuhjf\"",
+      "created_at": "2026-06-29T11:42:00.246Z"
+    },
+    {
+      "id": 64,
+      "user_id": 4,
+      "action": "Deleted task \"taskkk\"",
+      "created_at": "2026-06-29T11:42:01.615Z"
+    },
+    {
+      "id": 65,
+      "user_id": 4,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-29T11:42:03.597Z"
+    },
+    {
+      "id": 66,
+      "user_id": 4,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-29T11:42:05.690Z"
+    },
+    {
+      "id": 67,
+      "user_id": 4,
+      "action": "Created task \"rhedfvjerubr\"",
+      "created_at": "2026-06-29T11:42:15.065Z"
+    },
+    {
+      "id": 68,
+      "user_id": 4,
+      "action": "Updated task \"rhedfvjerubr\"",
+      "created_at": "2026-06-29T11:42:23.109Z"
+    },
+    {
+      "id": 69,
+      "user_id": 4,
+      "action": "Created project \"gfk,tkrkf\"",
+      "created_at": "2026-06-29T11:47:21.576Z"
+    },
+    {
+      "id": 70,
+      "user_id": 4,
+      "action": "Created task \"hbhrefnd\"",
+      "created_at": "2026-06-29T11:47:26.142Z"
+    },
+    {
+      "id": 71,
+      "user_id": 4,
+      "action": "Updated task \"hbhrefnd\"",
+      "created_at": "2026-06-29T11:47:38.796Z"
+    }
+  ],
+  "projects": [
+    {
+      "id": 2,
+      "user_id": 4,
+      "name": "CodeArena",
+      "description": "",
+      "color": "#0891b2",
+      "status": "active",
+      "created_at": "2026-06-28T20:26:23.281Z"
+    },
+    {
+      "id": 5,
+      "user_id": 4,
+      "name": "gfk,tkrkf",
+      "description": "",
+      "color": "#ea580c",
+      "status": "active",
+      "created_at": "2026-06-29T11:47:21.572Z"
     }
   ],
   "_nextId": {
     "users": 5,
-    "tasks": 11,
-    "activity_log": 18
+    "tasks": 28,
+    "activity_log": 72,
+    "projects": 6
   }
 }
