@@ -10,5 +10,6 @@ router.get("/",      ctrl.getAllProjects);
 router.post("/",     ctrl.createProject);
 router.put("/:id",   ctrl.updateProject);
 router.delete("/:id",ctrl.deleteProject);
+router.get("/:id/tasks", ctrl.getProjectTasks);
 
 module.exports = router;

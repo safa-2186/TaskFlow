@@ -65,3 +65,13 @@ exports.deleteProject = (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+exports.getProjectTasks = (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const tasks = db.tasks.findByUser(req.user.id).filter(t => t.project_id === id);
+    res.json(tasks);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
