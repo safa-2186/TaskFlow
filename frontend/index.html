@@ -421,6 +421,157 @@
       color: var(--text);
     }
 
+    /* ── THEME TOGGLE BUTTON (header) ── */
+    .theme-toggle-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      border: 1px solid var(--line2);
+      background: var(--panel);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+      transition: all .12s;
+    }
+
+    .theme-toggle-btn:hover {
+      background: var(--panel2);
+      color: var(--text);
+    }
+
+    /* ── NOTIFICATION BELL ── */
+    .notif-wrap {
+      position: relative;
+    }
+
+    .notif-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 9px;
+      border: 1px solid var(--line2);
+      background: var(--panel);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      position: relative;
+      flex-shrink: 0;
+      transition: all .12s;
+    }
+
+    .notif-btn:hover {
+      background: var(--panel2);
+      color: var(--text);
+    }
+
+    .notif-badge {
+      position: absolute;
+      top: -5px;
+      right: -5px;
+      background: var(--red);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 16px;
+      height: 16px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 4px;
+    }
+
+    .notif-panel {
+      position: absolute;
+      top: 46px;
+      right: 0;
+      width: 320px;
+      max-height: 380px;
+      overflow-y: auto;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      box-shadow: 0 12px 30px rgba(26, 43, 68, .12);
+      z-index: 9999;
+    }
+
+    .notif-panel .np-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .notif-panel .np-head h4 {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .notif-panel .np-head button {
+      font-size: 11.5px;
+      color: var(--accent);
+      border: none;
+      background: none;
+      font-weight: 600;
+    }
+
+    .notif-list {
+      list-style: none;
+    }
+
+    .notif-list li {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 11px 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .notif-list li:last-child {
+      border-bottom: none;
+    }
+
+    .notif-list li.unread {
+      background: var(--soft);
+    }
+
+    .notif-list .n-ic {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--panel2);
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .notif-list .n-txt {
+      font-size: 13px;
+      line-height: 1.4;
+    }
+
+    .notif-list .n-when {
+      font-size: 11px;
+      color: var(--dim);
+      margin-top: 2px;
+    }
+
+    .notif-empty {
+      padding: 30px 16px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--dim);
+    }
+
     /* ── PROFILE DROPDOWN ── */
     .profile-dropdown {
       position: absolute;
@@ -557,7 +708,6 @@
       gap: 18px;
     }
 
-    /* ── CHART ── */
     .chart-wrap {
       height: 160px;
       position: relative;
@@ -1548,6 +1698,11 @@
       #userName {
         display: none;
       }
+
+      .notif-panel {
+        width: 280px;
+        right: -10px;
+      }
     }
 
     /* ── COMPACT MODE ── */
@@ -1605,7 +1760,6 @@
     }
   </style>
 </head>
-
 <body>
 
   <!-- ══ HOME ══ -->
@@ -1842,7 +1996,7 @@
               if (isAdmin) document.getElementById("avatar").classList.add('admin');
               errorBanner.classList.add("hidden");
               view = "Dashboard"; renderView();
-              setTimeout(() => { show("dashboard"); initHamburger(); }, 400);
+              setTimeout(() => { show("dashboard"); initHamburger(); initNotifs(); initThemeToggle(); }, 400);
               showToast("Login successful!", false);
             } else {
               errorMessage.textContent = data.message || "Incorrect username or password.";
@@ -2022,6 +2176,27 @@
           <p class="sub" id="view-sub"></p>
         </div>
         <div class="dash-head-right" style="position:relative;">
+
+          <!-- THEME TOGGLE -->
+          <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle dark mode">
+            <i class="fa-solid fa-moon" id="themeToggleIcon"></i>
+          </button>
+
+          <!-- NOTIFICATION BELL -->
+          <div class="notif-wrap">
+            <button class="notif-btn" id="notifBtn" title="Notifications">
+              <i class="fa-regular fa-bell"></i>
+              <span class="notif-badge hidden" id="notifBadge">0</span>
+            </button>
+            <div class="notif-panel hidden" id="notifPanel">
+              <div class="np-head">
+                <h4>Notifications</h4>
+                <button id="markAllRead">Mark all read</button>
+              </div>
+              <ul class="notif-list" id="notifList"></ul>
+            </div>
+          </div>
+
           <span id="userName"></span>
           <div class="avatar" id="avatar" title="Profile"></div>
           <div id="profileMenu" class="profile-dropdown hidden">
@@ -2079,6 +2254,40 @@
     const escHtml = (s) => String(s).replace(/</g, "&lt;").replace(/>/g, "&gt;");
     const token = () => localStorage.getItem("token");
 
+    // ══ NOTIFICATIONS (in-app, client-side feed) ══
+    let notifications = [];
+    function pushNotif(text, icon = 'fa-circle-info') {
+      notifications.unshift({ id: Date.now() + Math.random(), text, icon, when: Date.now(), read: false });
+      if (notifications.length > 40) notifications.pop();
+      renderNotifs();
+    }
+    function renderNotifs() {
+      const badge = document.getElementById('notifBadge');
+      const list = document.getElementById('notifList');
+      if (!badge || !list) return;
+      const unread = notifications.filter(n => !n.read).length;
+      if (unread > 0) { badge.textContent = unread > 9 ? '9+' : unread; badge.classList.remove('hidden'); }
+      else badge.classList.add('hidden');
+      list.innerHTML = notifications.length === 0
+        ? '<div class="notif-empty">No notifications yet.</div>'
+        : notifications.map(n => `
+          <li class="${n.read ? '' : 'unread'}">
+            <span class="n-ic"><i class="fa-solid ${n.icon}"></i></span>
+            <div><div class="n-txt">${escHtml(n.text)}</div><div class="n-when">${timeAgo(n.when)}</div></div>
+          </li>`).join('');
+    }
+    function initNotifs() {
+      const btn = document.getElementById('notifBtn');
+      const panel = document.getElementById('notifPanel');
+      const markAll = document.getElementById('markAllRead');
+      if (!btn || !panel) return;
+      btn.addEventListener('click', e => { e.stopPropagation(); panel.classList.toggle('hidden'); renderNotifs(); });
+      markAll.addEventListener('click', e => { e.stopPropagation(); notifications.forEach(n => n.read = true); renderNotifs(); });
+      panel.addEventListener('click', e => e.stopPropagation());
+      document.addEventListener('click', () => panel.classList.add('hidden'));
+      renderNotifs();
+    }
+
     function show(id) { ["home", "login", "dashboard"].forEach(x => document.getElementById(x).classList.toggle("hidden", x !== id)); }
     function switchToView(v) { view = v; renderView(); }
 
@@ -2086,6 +2295,7 @@
 
     document.getElementById("logout").addEventListener("click", () => {
       currentUser = null; localStorage.removeItem("token"); localStorage.removeItem("userId"); localStorage.removeItem("user");
+      notifications = []; renderNotifs();
       document.getElementById("loginEmail").value = ""; document.getElementById("loginPassword").value = "";
       show("home");
     });
@@ -2327,10 +2537,12 @@
     }
 
     async function deleteTaskFromList(id, col) {
+      const removed = board[col].find(t => t.id === id);
       try {
         await fetch(`${API}/tasks/${id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token()}` } });
       } catch (e) { }
       board[col] = board[col].filter(t => t.id !== id);
+      if (removed) pushNotif(`Task "${removed.text}" was deleted.`, 'fa-trash');
       renderTasksBody();
     }
 
@@ -2366,6 +2578,7 @@
           const task = board[dragData.from].find(t => t.id === dragData.id);
           board[dragData.from] = board[dragData.from].filter(t => t.id !== dragData.id);
           board[col.id].push(task);
+          pushNotif(`"${task.text}" moved to ${col.title}.`, 'fa-arrows-left-right');
           try {
             await fetch(`${API}/tasks/${task.id}`, { method: "PATCH", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ status: col.id === "doing" ? "in_progress" : col.id }) });
           } catch (e) { }
@@ -2388,6 +2601,7 @@
           c.addEventListener("click", e => { if (e.target.classList.contains("del")) return; openModal(t.id); });
           c.querySelector(".del").addEventListener("click", async e => {
             e.stopPropagation();
+            pushNotif(`"${t.text}" was deleted.`, 'fa-trash');
             try { await fetch(`${API}/tasks/${t.id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token()}` } }); } catch (e) { }
             board[col.id] = board[col.id].filter(x => x.id !== t.id);
             renderBoard();
@@ -2404,6 +2618,7 @@
             const data = await res.json();
             board[col.id].push({ id: data.id || ("b" + bid++), text, desc: "", priority: "Medium", assignee: defAssignee, due: "" });
           } catch (er) { board[col.id].push({ id: "b" + bid++, text, desc: "", priority: "Medium", assignee: defAssignee, due: "" }); }
+          pushNotif(`New task added: "${text}".`, 'fa-plus');
           input.value = ""; renderBoard();
         });
         wrap.appendChild(sec);
@@ -2463,6 +2678,7 @@
         $("#m-delete").addEventListener("click", async () => {
           try { await fetch(`${API}/tasks/${t.id}`, { method: "DELETE", headers: { "Authorization": `Bearer ${token()}` } }); } catch (e) { }
           board[col] = board[col].filter(x => x.id !== t.id);
+          pushNotif(`"${t.text}" was deleted.`, 'fa-trash');
           close(); renderTasksBody();
         });
       }
@@ -2479,12 +2695,14 @@
             const data = await res.json();
             board[targetCol].push({ id: data.id || ("b" + bid++), text: newText, desc: newDesc, priority: newPrio, assignee: newAssign, due: newDue });
           } catch (e) { board[targetCol].push({ id: "b" + bid++, text: newText, desc: newDesc, priority: newPrio, assignee: newAssign, due: newDue }); }
+          pushNotif(`New task created: "${newText}".`, 'fa-plus');
         } else {
           t.text = newText; t.desc = newDesc; t.priority = newPrio; t.assignee = newAssign; t.due = newDue;
           if (targetCol !== col) { board[col] = board[col].filter(x => x.id !== t.id); board[targetCol].push(t); }
           try {
             await fetch(`${API}/tasks/${t.id}`, { method: "PUT", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ title: t.text, status: targetCol === "doing" ? "in_progress" : targetCol, assignee: t.assignee, priority: t.priority, due_date: t.due || null }) });
           } catch (e) { }
+          pushNotif(`"${t.text}" was updated.`, 'fa-pen');
         }
         close(); renderTasksBody();
       });
@@ -2563,7 +2781,7 @@
         try {
           const res = await fetch(`${API}/projects`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ name, description, color }) });
           const data = await res.json();
-          if (res.ok) { close(); switchToView('Projects'); }
+          if (res.ok) { pushNotif(`Project "${name}" was created.`, 'fa-folder-plus'); close(); switchToView('Projects'); }
           else { showAdminToast(data.message || 'Could not create project.', true); }
         } catch (e) { showAdminToast('Cannot connect to server.', true); }
       });
@@ -2625,11 +2843,6 @@
     <div id="profile-msg" style="font-size:13px;margin-bottom:12px;"></div>
     <button id="profile-save" class="btn-solid" style="width:100%;">Save Changes</button>
   </div>`;
-      // (bind after rendering)
-      setTimeout(() => {
-        const btn = document.getElementById('profile-save');
-        if (btn) btn.addEventListener('click', saveProfile);
-      }, 0);
     }
     async function saveProfile() {
       const newName = document.getElementById('profile-username').value.trim();
@@ -2643,9 +2856,11 @@
           document.getElementById('userName').textContent = currentUser;
           document.getElementById('avatar').textContent = currentUser.slice(0, 2).toUpperCase();
           msg.style.color = 'var(--green)'; msg.textContent = 'Username updated!';
+          pushNotif('Your profile was updated.', 'fa-user-pen');
         } else { msg.style.color = 'var(--red)'; msg.textContent = data.message || 'Update failed.'; }
       } catch (e) { msg.style.color = 'var(--red)'; msg.textContent = 'Cannot connect to server.'; }
     }
+    document.addEventListener('click', (e) => { if (e.target && e.target.id === 'profile-save') saveProfile(); });
 
     // ══════════════════════ SETTINGS (NOTION-STYLE) ══════════════════════
     let settingsSection = 'profile';
@@ -2858,6 +3073,7 @@
         const data = await res.json();
         if (res.ok) {
           showAdminToast('Password updated!', false);
+          pushNotif('Your password was changed.', 'fa-lock');
           ['pw-current', 'pw-new', 'pw-confirm'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
         } else { showAdminToast(data.message || 'Could not update password.', true); }
       } catch (e) { showAdminToast('Cannot connect to server.', true); }
@@ -2939,6 +3155,7 @@
       document.getElementById('avatar').textContent = currentUser.slice(0, 2).toUpperCase();
       document.getElementById('settings-avatar').textContent = currentUser.slice(0, 2).toUpperCase();
       showAdminToast('Profile saved!', false);
+      pushNotif('Your profile was updated.', 'fa-user-pen');
     }
     function setAccentColor(c) { document.documentElement.style.setProperty('--accent', c); document.documentElement.style.setProperty('--soft', c + '22'); }
     function setTheme(mode) {
@@ -2946,6 +3163,18 @@
       localStorage.setItem('theme', mode);
       const lb = document.getElementById('theme-light-btn'), db = document.getElementById('theme-dark-btn');
       if (lb && db) { lb.classList.toggle('active', mode === 'light'); db.classList.toggle('active', mode === 'dark'); }
+      const ti = document.getElementById('themeToggleIcon');
+      if (ti) { ti.className = mode === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon'; }
+    }
+    function initThemeToggle() {
+      const btn = document.getElementById('themeToggleBtn');
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        const cur = localStorage.getItem('theme') === 'dark' ? 'dark' : 'light';
+        setTheme(cur === 'dark' ? 'light' : 'dark');
+      });
+      const ti = document.getElementById('themeToggleIcon');
+      if (ti) { ti.className = localStorage.getItem('theme') === 'dark' ? 'fa-solid fa-sun' : 'fa-solid fa-moon'; }
     }
 
     // ══════════════════════ LOCAL PREFERENCES (cosmetic settings, no backend yet) ══════════════════════
