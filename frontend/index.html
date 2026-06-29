@@ -2185,14 +2185,15 @@
 
     function renderBoard() {
       const wrap = $("#k-board"); if (!wrap) return; wrap.innerHTML = "";
-      const filtered = taskSearch || taskFilter !== 'all';
+      const filtered = taskSearch || taskFilter !== 'all' || currentProjectId;
       BCOLS.forEach(col => {
         let tasks = board[col.id];
         if (filtered) {
           tasks = tasks.filter(t => {
+            const mp = !currentProjectId || t.project_id === currentProjectId; // ← ADD THIS
             const mf = taskFilter === 'all' || t.col === taskFilter || t.priority === taskFilter || (taskFilter === 'in_progress' && col.id === 'doing') || col.id === taskFilter;
             const ms = !taskSearch || t.text.toLowerCase().includes(taskSearch.toLowerCase());
-            return mf && ms;
+            return mp && mf && ms; 
           });
         }
         const sec = document.createElement("section"); sec.className = "k-col";
