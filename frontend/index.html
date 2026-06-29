@@ -2050,7 +2050,8 @@
       } else if (view === "Tasks") {
         title.textContent = "Tasks";
         sub.textContent = "Switch between Kanban and List view. Drag, filter, search.";
-        body.innerHTML = `
+        loadProjects().then(() => {
+          body.innerHTML = `
       <div class="fade" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
         <div class="view-toggle">
           <button class="vt-btn ${taskView === 'kanban' ? 'active' : ''}" onclick="taskView='kanban';renderTasksBody()"><i class="fa-solid fa-table-columns"></i> Kanban</button>
@@ -2060,6 +2061,10 @@
           <i class="fa-solid fa-magnifying-glass" style="color:var(--dim);font-size:13px;"></i>
           <input placeholder="Search tasks…" id="task-search" oninput="taskSearch=this.value;renderTasksBody()" value="${taskSearch}">
         </div>
+        <select id="project-filter" onchange="currentProjectId=this.value?parseInt(this.value):null;renderTasksBody()" style="border:1px solid var(--line2);background:var(--panel);border-radius:9px;padding:8px 12px;font-size:13px;color:var(--text);">
+          <option value="">All Projects</option>
+          ${projects.map(p => `<option value="${p.id}" ${currentProjectId===p.id?'selected':''}>${escHtml(p.name)}</option>`).join('')}
+        </select>
         <button onclick="openCreateModal()" class="btn-solid" style="display:flex;align-items:center;gap:7px;"><i class="fa-solid fa-plus"></i> New Task</button>
       </div>
       <div class="filter-bar fade" id="filter-bar">
@@ -2067,8 +2072,11 @@
       </div>
       <div id="tasks-body"></div>`;
         loadTasks().then(tasks => { if (tasks) board = formatTasks(tasks); renderTasksBody(); });
+      });
       } else if (view === "Projects") {
-        title.textContent = "Projects"; sub.textContent = "Organize your work into projects."; body.innerHTML = renderProjects();
+        title.textContent = "Projects"; sub.textContent = "Organize your work into projects.";
+        body.innerHTML = '<div class="empty fade"><span class="icon"><i class="fa-solid fa-spinner fa-spin"></i></span><p>Loading projects…</p></div>';
+        loadProjects().then(() => { body.innerHTML = renderProjects(); });
       } else if (view === "Profile") {
         title.textContent = "My Profile"; sub.textContent = "Your account information."; body.innerHTML = renderProfile();
       } else if (view === "Settings") {
@@ -2135,7 +2143,8 @@
       return all.filter(t => {
         const matchFilter = taskFilter === 'all' || t.col === taskFilter || t.priority === taskFilter || (taskFilter === 'in_progress' && t.col === 'doing');
         const matchSearch = !taskSearch || t.text.toLowerCase().includes(taskSearch.toLowerCase()) || (t.assignee || '').toLowerCase().includes(taskSearch.toLowerCase());
-        return matchFilter && matchSearch;
+        const matchProject = !currentProjectId || t.project_id === currentProjectId;
+        return matchFilter && matchSearch && matchProject;
       });
     }
 
@@ -2307,27 +2316,38 @@
       });
     }
 
-    let projects = [
-      { id: "p1", name: "Taskflow App", description: "Main project for task management", color: "#2563eb", tasks: 12, status: "active" },
-      { id: "p2", name: "Landing Page", description: "Marketing website redesign", color: "#7c3aed", tasks: 5, status: "active" },
-    ];
-    function renderProjects() {
-      return `
-  <div class="fade">
-    <div style="display:flex;justify-content:flex-end;margin-bottom:16px;"><button onclick="openNewProjectModal()" class="btn-solid"><i class="fa-solid fa-plus"></i> New Project</button></div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
-      ${projects.map(p => `
-      <div class="panel" style="border-top:4px solid ${p.color};cursor:pointer;" onclick="openProjectDetail('${p.id}')">
-        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;"><h3 style="font-size:16px;margin:0;">${escHtml(p.name)}</h3><span class="tag">${p.status}</span></div>
-        <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">${escHtml(p.description)}</p>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <span style="font-size:12px;color:var(--dim);"><i class="fa-solid fa-list-check"></i> ${p.tasks} tasks</span>
-          <button onclick="removeProject('${p.id}');event.stopPropagation();" style="border:none;background:none;color:var(--dim);font-size:13px;"><i class="fa-solid fa-trash"></i></button>
-        </div>
-      </div>`).join('')}
+    let projects = [];
+    let currentProjectId = null ;
+
+   function renderProjects() {
+      if (projects.length === 0) return `
+    <div class="fade">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+      <button onclick="openNewProjectModal()" class="btn-solid"><i class="fa-solid fa-plus"></i> New Project</button>
     </div>
-  </div>`;
-    }
+    <div class="empty"><span class="icon"><i class="fa-solid fa-folder-open"></i></span><p>No projects yet. Create your first one!</p></div>
+    </div>`;
+      return `
+    <div class="fade">
+      <div style="display:flex;justify-content:flex-end;margin-bottom:16px;">
+        <button onclick="openNewProjectModal()" class="btn-solid"><i class="fa-solid fa-plus"></i> New Project</button>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
+        ${projects.map(p => `
+        <div class="panel" style="border-top:4px solid ${p.color};cursor:pointer;" onclick="openProjectKanban(${p.id})">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
+            <h3 style="font-size:16px;margin:0;">${escHtml(p.name)}</h3>
+            <span class="tag">${p.status}</span>
+          </div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:14px;">${escHtml(p.description || '')}</p>
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:12px;color:var(--dim);"><i class="fa-solid fa-list-check"></i> ${p.task_count || 0} tasks</span>
+            <button onclick="removeProject(${p.id});event.stopPropagation();" style="border:none;background:none;color:var(--dim);font-size:13px;"><i class="fa-solid fa-trash"></i></button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+}
     function openNewProjectModal() {
       const root = $("#modal-root");
       root.innerHTML = `
@@ -2345,31 +2365,169 @@
       const close = () => (root.innerHTML = "");
       $("#m-cancel").addEventListener("click", close);
       $("#ov").addEventListener("click", e => { if (e.target.id === "ov") close(); });
-      $("#m-save").addEventListener("click", () => {
+      $("#m-save").addEventListener("click", async () => {
         const name = $("#pj-name").value.trim(); if (!name) return;
-        projects.push({ id: "p" + Date.now(), name, description: $("#pj-desc").value, color: window._pjColor || '#2563eb', tasks: 0, status: "active" });
-        pushNotif(`Project "${name}" was created.`, 'fa-folder-plus');
-        close(); renderView();
+        try {
+          await fetch(`${API}/projects`, { method:"POST", headers:{"Content-Type":"application/json","Authorization":`Bearer ${token()}`}, body: JSON.stringify({name, description:$("#pj-desc").value, color: window._pjColor||'#2563eb'}) });
+          pushNotif(`Project "${name}" was created.`, 'fa-folder-plus');
+          close();
+          await loadProjects();
+          renderView();
+        } catch(e) { showAdminToast("Cannot connect to server.", true); }
       });
     }
-    function removeProject(id) { projects = projects.filter(p => p.id !== id); renderView(); }
-    function openProjectDetail(id) {
-      const p = projects.find(x => x.id === id); if (!p) return;
-      const root = $("#modal-root");
-      root.innerHTML = `
-  <div class="overlay" id="ov">
-    <div class="modal" style="max-width:420px;">
-      <h2 style="display:flex;align-items:center;gap:10px;"><span style="width:14px;height:14px;border-radius:4px;background:${p.color};display:inline-block;"></span>${escHtml(p.name)}</h2>
-      <p style="font-size:14px;color:var(--muted);margin-bottom:18px;">${escHtml(p.description)}</p>
-      <div class="s-row"><div class="s-row-label">Status</div><span class="tag">${p.status}</span></div>
-      <div class="s-row"><div class="s-row-label">Tasks</div><span style="color:var(--muted);">${p.tasks}</span></div>
-      <div class="m-actions"><button class="btn-ghost" id="m-cancel">Close</button></div>
-    </div>
-  </div>`;
-      const close = () => (root.innerHTML = "");
-      $("#m-cancel").addEventListener("click", close);
-      $("#ov").addEventListener("click", e => { if (e.target.id === "ov") close(); });
+    async function removeProject(id) { 
+      try {
+        await fetch(`${API}/projects/${id}`, { method:"DELETE", headers:{"Authorization":`Bearer ${token()}`} });
+        await loadProjects();
+        renderView();
+      } catch(e) { showAdminToast("Cannot connect to server.", true); } 
     }
+    
+    async function loadProjects() {
+      try {
+        const res = await fetch(`${API}/projects`, { headers: { "Authorization": `Bearer ${token()}` } });
+        projects = res.ok ? await res.json() : [];
+      } catch(e) { projects = []; }
+    }
+
+    async function openProjectKanban(projectId) {
+      projectId = parseInt(projectId);
+      currentProjectId = projectId;
+      await loadProjects();
+      const p = projects.find(x => x.id === projectId);
+      if (!p) return;
+      view = "Tasks";
+      const title = $("#view-title"), sub = $("#view-sub"), body = $("#view-body");
+      title.textContent = p.name;
+      sub.textContent = p.description || "Project tasks";
+      body.innerHTML = `
+      <div class="fade" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+        <button onclick="currentProjectId=null;view='Projects';loadProjects().then(()=>{renderView()});" class="btn-ghost" style="font-size:13px;"><i class="fa-solid fa-arrow-left"></i> Back to Projects</button>
+        <div class="view-toggle">
+          <button class="vt-btn ${taskView==='kanban'?'active':''}" onclick="taskView='kanban';renderProjectTasksBody()"><i class="fa-solid fa-table-columns"></i> Kanban</button>
+          <button class="vt-btn ${taskView==='list'?'active':''}" onclick="taskView='list';renderProjectTasksBody()"><i class="fa-solid fa-list"></i> List</button>
+        </div>
+        <button onclick="openCreateModalForProject(${projectId})" class="btn-solid"><i class="fa-solid fa-plus"></i> New Task</button>
+      </div>
+      <div id="tasks-body"></div>`;
+      try {
+        const res = await fetch(`${API}/projects/${projectId}/tasks`, { headers: { "Authorization": `Bearer ${token()}` } });
+        const tasks = res.ok ? await res.json() : [];
+        board = formatTasks(tasks);
+      } catch(e) { board = { todo:[], doing:[], done:[] }; }
+      renderProjectTasksBody();
+      buildNav();
+    }
+
+    function renderProjectTasksBody() {
+      const body = document.getElementById("tasks-body"); if (!body) return;
+      if (taskView === "kanban") { body.innerHTML = '<div class="k-board fade" id="k-board"></div>'; renderBoardForProject(); }
+      else { body.innerHTML = renderProjectListView(); bindListEvents(); }
+    }
+    function renderProjectListView() {
+      const tasks = [...board.todo.map(t => ({...t, col:'todo'})), ...board.doing.map(t => ({...t, col:'doing'})), ...board.done.map(t => ({...t, col:'done'}))];
+      if (!tasks.length) return '<div class="empty fade"><span class="icon"><i class="fa-solid fa-inbox"></i></span><p>No tasks found.</p></div>';
+      return `
+    <div class="panel fade" style="padding:0;overflow:hidden;">
+      <table class="list-table">
+        <thead><tr><th style="width:40%">Title</th><th>Status</th><th>Priority</th><th>Assignee</th><th>Due Date</th><th>Actions</th></tr></thead>
+        <tbody>
+          ${tasks.map(t => `
+          <tr>
+            <td><span style="font-weight:600;">${escHtml(t.text)}</span></td>
+            <td><span class="lt-status ${t.col}">${statusOf(t.col)}</span></td>
+            <td><span class="k-card pill" style="background:${PRIORITIES[t.priority]||'#64748b'};position:static;padding:3px 10px;">${escHtml(t.priority||'Medium')}</span></td>
+            <td style="font-size:13px;color:var(--muted);">${escHtml(t.assignee||'—')}</td>
+            <td style="font-size:12px;color:var(--dim);">${t.due||'—'}</td>
+            <td><div class="lt-actions">
+              <button class="del" title="Delete" onclick="deleteTaskFromProjectList('${t.id}','${t.col}')"><i class="fa-solid fa-trash"></i></button>
+            </div></td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+    }  
+
+async function deleteTaskFromProjectList(id, col) {
+  try { await fetch(`${API}/tasks/${id}`, { method:"DELETE", headers:{"Authorization":`Bearer ${token()}`} }); } catch(e){}
+  board[col] = board[col].filter(t => t.id !== id);
+  renderProjectTasksBody();
+}
+
+    function renderBoardForProject() {
+      const wrap = $("#k-board"); if (!wrap) return; wrap.innerHTML = "";
+      BCOLS.forEach(col => {
+        const tasks = board[col.id];
+        const sec = document.createElement("section"); sec.className = "k-col";
+        sec.innerHTML = `
+        <div class="k-head"><span class="dot" style="background:${col.accent}"></span><h3>${col.title}</h3><span class="count">${tasks.length}</span></div>
+        <div class="k-cards" id="cards-${col.id}"></div>
+        <input class="k-input" placeholder="+ Add a task, press Enter" id="input-${col.id}" />`;
+        sec.addEventListener("dragover", e => { e.preventDefault(); sec.classList.add("over"); });
+        sec.addEventListener("dragleave", () => sec.classList.remove("over"));
+        sec.addEventListener("drop", async () => {
+          sec.classList.remove("over");
+          if (!dragData || dragData.from === col.id) return;
+          const task = board[dragData.from].find(t => t.id === dragData.id);
+          board[dragData.from] = board[dragData.from].filter(t => t.id !== dragData.id);
+          board[col.id].push(task);
+          try { await fetch(`${API}/tasks/${task.id}`, { method:"PATCH", headers:{"Content-Type":"application/json","Authorization":`Bearer ${token()}`}, body: JSON.stringify({ status: col.id==="doing"?"in_progress":col.id }) }); } catch(e){}
+          dragData = null; renderBoardForProject();
+        });
+        const cards = sec.querySelector(`#cards-${col.id}`);
+        tasks.forEach(t => {
+          const c = document.createElement("article"); c.className = "k-card"; c.draggable = true;
+          const pColor = PRIORITIES[t.priority] || "#6b7d96";
+          c.innerHTML = `
+          <span class="txt">${escHtml(t.text)}</span>
+          <div class="meta">
+            <span class="pill" style="background:${pColor}">${escHtml(t.priority||'Medium')}</span>
+            ${t.assignee&&t.assignee!=="No one"?`<span class="who"><i class="fa-solid fa-user" style="font-size:9px;"></i> ${escHtml(t.assignee)}</span>`:""}
+            ${t.due?`<span class="due-label"><i class="fa-regular fa-calendar"></i>${t.due}</span>`:""}
+          </div>
+          <button class="del" title="Delete">×</button>`;
+          c.addEventListener("dragstart", ()=>{ dragData={id:t.id,from:col.id}; c.classList.add("dragging"); });
+          c.addEventListener("dragend", ()=>c.classList.remove("dragging"));
+          c.addEventListener("click", e=>{ if(e.target.classList.contains("del")) return; openModal(t.id); });
+          c.querySelector(".del").addEventListener("click", async e=>{
+            e.stopPropagation();
+            try { await fetch(`${API}/tasks/${t.id}`,{method:"DELETE",headers:{"Authorization":`Bearer ${token()}`}}); } catch(e){}
+            board[col.id]=board[col.id].filter(x=>x.id!==t.id);
+            renderBoardForProject();
+          });
+          cards.appendChild(c);
+        });
+        const input = sec.querySelector(`#input-${col.id}`);
+        input.addEventListener("keydown", async e => {
+          if (e.key !== "Enter") return;
+          const text = input.value.trim(); if (!text) return;
+          try {
+            const res = await fetch(`${API}/tasks`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` },
+              body: JSON.stringify({ title: text, status: col.id === "doing" ? "in_progress" : col.id, priority: "Medium", assignee: "No one", project_id: currentProjectId })
+            });
+            const data = await res.json();
+            board[col.id].push({ id: data.id || ("b" + bid++), text, desc: "", priority: "Medium", assignee: "No one", due: "" });
+          } catch(er) {
+            board[col.id].push({ id: "b" + bid++, text, desc: "", priority: "Medium", assignee: "No one", due: "" });
+          }
+          input.value = "";
+          const newDiv = document.getElementById("k-board");
+          if (newDiv) {
+            renderBoardForProject();
+          } else {
+            renderProjectTasksBody();
+          }
+        });
+        wrap.appendChild(sec);
+      });
+    }
+
+function openCreateModalForProject(projectId) {
+  openTaskModal({id:null,text:"",desc:"",priority:"Medium",assignee:"No one",due:"",project_id:projectId},"todo",true);
+}
 
     function renderProfile() {
       const stored = JSON.parse(localStorage.getItem('user') || '{}');
@@ -2683,7 +2841,12 @@
     async function loadTasks() { try { const res = await fetch(`${API}/tasks`, { headers: { "Authorization": `Bearer ${token()}` } }); return await res.json(); } catch (e) { return null; } }
     function formatTasks(tasks) {
       const b = { todo: [], doing: [], done: [] };
-      tasks.forEach(t => { const n = { id: t.id, text: t.title, desc: "", priority: t.priority || "Medium", assignee: t.assignee || "No one", due: t.due_date || "" }; if (t.status === "todo") b.todo.push(n); else if (t.status === "in_progress") b.doing.push(n); else if (t.status === "done") b.done.push(n); });
+      tasks.forEach(t => { 
+        const n = { id: t.id, text: t.title, desc: "", priority: t.priority || "Medium", assignee: t.assignee || "No one", due: t.due_date || "", project_id: t.project_id || null }; 
+        if (t.status === "todo") b.todo.push(n); 
+        else if (t.status === "in_progress") b.doing.push(n); 
+        else if (t.status === "done") b.done.push(n); 
+      });
       return b;
     }
     async function loadActivity() {
