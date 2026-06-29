@@ -5,6 +5,7 @@ const cors    = require("cors");
 const path    = require("path");
 
 const taskRoutes = require("./routes/tasks");
+const projectRoutes = require("./routes/projects");
 const authRoutes = require("./routes/authRoutes");
 const projectRoutes = require("./routes/projects");
 
@@ -20,13 +21,16 @@ app.use(express.static(path.join(__dirname, "frontend")));
 
 // ── API ROUTES ────────────────────────────────────────────
 app.use("/tasks", taskRoutes);
+app.use("/projects", projectRoutes);
 app.use("/users", authRoutes);       // frontend uses /users/login etc.
 app.use("/api/auth", authRoutes);
 app.use("/projects", projectRoutes);   // clean API path
 
 // ── SPA FALLBACK ──────────────────────────────────────────
+app.use(express.static(path.join(__dirname, "..", "frontend")));
+
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "frontend/index.html"));
+  res.sendFile(path.join(__dirname, "..", "frontend", "index.html"));
 });
 
 // ── START ─────────────────────────────────────────────────

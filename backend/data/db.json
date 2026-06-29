@@ -1,0 +1,677 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "user_name": "admin",
+      "email": "admin@taskflow.io",
+      "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+      "role": "admin",
+      "created_at": "2025-01-15T10:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 2,
+      "user_name": "Alice",
+      "email": "alice@example.com",
+      "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+      "role": "user",
+      "created_at": "2025-03-20T08:30:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 3,
+      "user_name": "Bob",
+      "email": "bob@example.com",
+      "password": "$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi",
+      "role": "user",
+      "created_at": "2025-04-10T14:20:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 4,
+      "user_name": "laila",
+      "email": "lailaelberhichi@gmail.com",
+      "password": "$2a$10$Mfm/JmOogUaJ5gkvijv45eIhfIVB9tNCU0lXt/gFycT3rR.e5lBG.",
+      "role": "user",
+      "created_at": "2026-06-25T20:47:30.063Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 5,
+      "user_name": "LAILA",
+      "email": "laila.elberhichi.06@gmail.com",
+      "password": "$2a$10$x07vOYeisw69E1a6tZ.0Z.h.zZfLidS7KH9oLgc9RpWgzUJBjbCzq",
+      "role": "user",
+      "workspace_id": 2,
+      "created_at": "2026-06-28T19:51:40.405Z"
+    },
+    {
+      "id": 6,
+      "user_name": "safa",
+      "email": "safa.bouguilime@gmail.com",
+      "password": "$2a$10$y3YDMzijVi6DgeV0J4jsS.CRZju7Q6tqFT5./7w/ZknN1QmsxLxlW",
+      "role": "user",
+      "created_at": "2026-06-25T14:56:01.591Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 7,
+      "user_name": "Adam Tq",
+      "email": "adamtq10@gmail.com",
+      "password": "$2b$10$Dm5DK7SHjA1piCUlJsZRdOJWGhaGbdcsE5ALwMzvECXzkvUCBQn/y",
+      "role": "user",
+      "created_at": "2026-06-28T11:27:54.649Z",
+      "workspace_id": 1
+    }
+  ],
+  "tasks": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "title": "Set up project structure",
+      "status": "done",
+      "priority": "High",
+      "assignee": "admin",
+      "due_date": "2025-01-20",
+      "created_at": "2025-01-15T10:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 2,
+      "user_id": 1,
+      "title": "Design the Kanban board",
+      "status": "done",
+      "priority": "High",
+      "assignee": "Alice",
+      "due_date": "2025-01-25",
+      "created_at": "2025-01-16T09:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 3,
+      "user_id": 1,
+      "title": "Build authentication system",
+      "status": "in_progress",
+      "priority": "High",
+      "assignee": "admin",
+      "due_date": "2026-07-01",
+      "created_at": "2025-01-17T11:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 4,
+      "user_id": 1,
+      "title": "Add admin panel",
+      "status": "in_progress",
+      "priority": "Medium",
+      "assignee": "Safa",
+      "due_date": "2026-07-10",
+      "created_at": "2025-01-18T12:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 5,
+      "user_id": 1,
+      "title": "Write documentation",
+      "status": "todo",
+      "priority": "Low",
+      "assignee": "Safa",
+      "due_date": "2026-07-20",
+      "created_at": "2025-01-19T15:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 6,
+      "user_id": 1,
+      "title": "Deploy to Railway",
+      "status": "todo",
+      "priority": "Medium",
+      "assignee": "No one",
+      "due_date": "2026-07-15",
+      "created_at": "2025-01-20T10:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 7,
+      "user_id": 4,
+      "title": "figma",
+      "status": "in_progress",
+      "priority": "High",
+      "assignee": "Adam",
+      "due_date": "2026-06-29",
+      "created_at": "2026-06-25T20:50:07.402Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 8,
+      "user_id": 4,
+      "title": "planning figma",
+      "status": "in_progress",
+      "priority": "Low",
+      "assignee": "Hafssa",
+      "due_date": "2026-06-30",
+      "created_at": "2026-06-25T20:50:22.978Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 9,
+      "user_id": 4,
+      "title": "design",
+      "status": "done",
+      "priority": "Medium",
+      "assignee": "Laila",
+      "due_date": "2026-06-28",
+      "created_at": "2026-06-25T20:52:37.134Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 10,
+      "user_id": 1,
+      "title": "Set up project structure",
+      "status": "done",
+      "priority": "High",
+      "assignee": "admin",
+      "due_date": "2025-01-20",
+      "created_at": "2025-01-15T10:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 11,
+      "user_id": 1,
+      "title": "Design the Kanban board",
+      "status": "done",
+      "priority": "High",
+      "assignee": "Alice",
+      "due_date": "2025-01-25",
+      "created_at": "2025-01-16T09:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 12,
+      "user_id": 1,
+      "title": "Build authentication system",
+      "status": "in_progress",
+      "priority": "High",
+      "assignee": "admin",
+      "due_date": "2026-07-01",
+      "created_at": "2025-01-17T11:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 13,
+      "user_id": 1,
+      "title": "Add admin panel",
+      "status": "in_progress",
+      "priority": "Medium",
+      "assignee": "Alice",
+      "due_date": "2026-07-10",
+      "created_at": "2025-01-18T12:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 14,
+      "user_id": 1,
+      "title": "Write documentation",
+      "status": "todo",
+      "priority": "Low",
+      "assignee": "Bob",
+      "due_date": "2026-07-20",
+      "created_at": "2025-01-19T15:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 15,
+      "user_id": 1,
+      "title": "Deploy to Railway",
+      "status": "todo",
+      "priority": "Medium",
+      "assignee": "No one",
+      "due_date": "2026-07-15",
+      "created_at": "2025-01-20T10:00:00.000Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 16,
+      "user_id": 6,
+      "title": "first task",
+      "status": "todo",
+      "priority": "Medium",
+      "assignee": "No one",
+      "due_date": null,
+      "created_at": "2026-06-27T15:59:03.703Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 17,
+      "user_id": 6,
+      "title": "task",
+      "status": "todo",
+      "priority": "Medium",
+      "assignee": "No one",
+      "due_date": null,
+      "created_at": "2026-06-27T15:59:10.544Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 18,
+      "user_id": 7,
+      "title": "backend Taskflow",
+      "status": "todo",
+      "priority": "Medium",
+      "assignee": "Safa",
+      "due_date": "2026-06-29",
+      "created_at": "2026-06-28T13:52:04.619Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 19,
+      "user_id": 7,
+      "title": "Design Figma CodeArena",
+      "status": "in_progress",
+      "priority": "High",
+      "assignee": "Adam",
+      "due_date": "2026-06-30",
+      "created_at": "2026-06-28T13:52:36.205Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 20,
+      "user_id": 7,
+      "title": "Design Figma taskflow",
+      "status": "in_progress",
+      "priority": "High",
+      "assignee": "Adam",
+      "due_date": "2026-06-30",
+      "created_at": "2026-06-28T13:53:33.507Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 21,
+      "user_id": 7,
+      "title": "Project section",
+      "status": "in_progress",
+      "priority": "Medium",
+      "assignee": "Safa",
+      "due_date": "2026-06-30",
+      "created_at": "2026-06-28T13:53:58.417Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 22,
+      "user_id": 7,
+      "title": "Notification Mesaage",
+      "status": "in_progress",
+      "priority": "Medium",
+      "assignee": "Laila",
+      "due_date": "2026-06-29",
+      "created_at": "2026-06-28T14:18:37.424Z",
+      "workspace_id": 1
+    },
+    {
+      "id": 23,
+      "user_id": 7,
+      "title": "Presentation Review",
+      "status": "todo",
+      "priority": "Low",
+      "assignee": "No one",
+      "due_date": "2026-07-08",
+      "created_at": "2026-06-28T14:19:47.874Z",
+      "workspace_id": 1
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "user_id": 7,
+      "workspace_id": 1,
+      "name": "taskflow",
+      "description": "",
+      "color": "#2563eb",
+      "status": "active",
+      "created_at": "2026-06-29T11:14:41.035Z"
+    },
+    {
+      "id": 2,
+      "user_id": 7,
+      "workspace_id": 1,
+      "name": "Codearena",
+      "description": "codearena quiz app",
+      "color": "#2563eb",
+      "status": "active",
+      "created_at": "2026-06-29T11:14:51.818Z"
+    }
+  ],
+  "activity_log": [
+    {
+      "user_id": 1,
+      "action": "Created task \"Set up project structure\"",
+      "created_at": "2025-01-15T10:05:00.000Z",
+      "id": 1
+    },
+    {
+      "user_id": 1,
+      "action": "Created task \"Set up project structure\"",
+      "created_at": "2025-01-15T10:05:00.000Z",
+      "id": 2
+    },
+    {
+      "user_id": 1,
+      "action": "Started task \"Build authentication system\"",
+      "created_at": "2025-01-17T11:30:00.000Z",
+      "id": 3
+    },
+    {
+      "user_id": 1,
+      "action": "Started task \"Build authentication system\"",
+      "created_at": "2025-01-17T11:30:00.000Z",
+      "id": 4
+    },
+    {
+      "user_id": 1,
+      "action": "Created task \"Add admin panel\"",
+      "created_at": "2025-01-18T12:05:00.000Z",
+      "id": 5
+    },
+    {
+      "user_id": 1,
+      "action": "Created task \"Add admin panel\"",
+      "created_at": "2025-01-18T12:05:00.000Z",
+      "id": 6
+    },
+    {
+      "user_id": 1,
+      "action": "Completed task \"Set up project structure\"",
+      "created_at": "2025-01-20T16:00:00.000Z",
+      "id": 7
+    },
+    {
+      "user_id": 1,
+      "action": "Completed task \"Set up project structure\"",
+      "created_at": "2025-01-20T16:00:00.000Z",
+      "id": 8
+    },
+    {
+      "user_id": 1,
+      "action": "Completed task \"Design the Kanban board\"",
+      "created_at": "2025-01-25T17:00:00.000Z",
+      "id": 9
+    },
+    {
+      "user_id": 1,
+      "action": "Completed task \"Design the Kanban board\"",
+      "created_at": "2025-01-25T17:00:00.000Z",
+      "id": 10
+    },
+    {
+      "user_id": 6,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-25T14:58:45.940Z",
+      "id": 11
+    },
+    {
+      "user_id": 4,
+      "action": "Created task \"planning figma\"",
+      "created_at": "2026-06-25T20:50:07.404Z",
+      "id": 12
+    },
+    {
+      "user_id": 4,
+      "action": "Created task \"planning figma\"",
+      "created_at": "2026-06-25T20:50:22.983Z",
+      "id": 13
+    },
+    {
+      "user_id": 4,
+      "action": "Started task \"planning figma\"",
+      "created_at": "2026-06-25T20:50:46.741Z",
+      "id": 14
+    },
+    {
+      "user_id": 4,
+      "action": "Completed task \"planning figma\"",
+      "created_at": "2026-06-25T20:51:08.308Z",
+      "id": 15
+    },
+    {
+      "user_id": 4,
+      "action": "Started task \"planning figma\"",
+      "created_at": "2026-06-25T20:51:16.983Z",
+      "id": 16
+    },
+    {
+      "user_id": 4,
+      "action": "Started task \"figma\"",
+      "created_at": "2026-06-25T20:51:45.627Z",
+      "id": 17
+    },
+    {
+      "user_id": 4,
+      "action": "Moved task \"figma\" to To Do",
+      "created_at": "2026-06-25T20:51:56.129Z",
+      "id": 18
+    },
+    {
+      "user_id": 4,
+      "action": "Created task \"design\"",
+      "created_at": "2026-06-25T20:52:37.139Z",
+      "id": 19
+    },
+    {
+      "user_id": 6,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-26T16:26:02.362Z",
+      "id": 20
+    },
+    {
+      "user_id": 6,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-26T16:30:56.043Z",
+      "id": 21
+    },
+    {
+      "user_id": 6,
+      "action": "Updated task \"first task\"",
+      "created_at": "2026-06-26T19:56:14.526Z",
+      "id": 22
+    },
+    {
+      "user_id": 6,
+      "action": "Updated task \"first task\"",
+      "created_at": "2026-06-26T19:56:19.745Z",
+      "id": 23
+    },
+    {
+      "user_id": 6,
+      "action": "Started task \"first task\"",
+      "created_at": "2026-06-26T19:56:58.511Z",
+      "id": 24
+    },
+    {
+      "user_id": 6,
+      "action": "Completed task \"first task\"",
+      "created_at": "2026-06-26T19:57:00.201Z",
+      "id": 25
+    },
+    {
+      "user_id": 6,
+      "action": "Started task \"first task\"",
+      "created_at": "2026-06-26T19:57:02.350Z",
+      "id": 26
+    },
+    {
+      "user_id": 6,
+      "action": "Moved task \"first task\" to To Do",
+      "created_at": "2026-06-26T19:57:04.168Z",
+      "id": 27
+    },
+    {
+      "user_id": 6,
+      "action": "Deleted task \"first task\"",
+      "created_at": "2026-06-26T19:57:15.246Z",
+      "id": 28
+    },
+    {
+      "user_id": 6,
+      "action": "Created task \"first task\"",
+      "created_at": "2026-06-27T15:59:03.710Z",
+      "id": 29
+    },
+    {
+      "user_id": 6,
+      "action": "Created task \"task\"",
+      "created_at": "2026-06-27T15:59:10.547Z",
+      "id": 30
+    },
+    {
+      "user_id": 7,
+      "action": "Created task \"backend Taskflow\"",
+      "created_at": "2026-06-28T13:52:04.622Z",
+      "id": 31
+    },
+    {
+      "user_id": 7,
+      "action": "Updated task \"backend Taskflow\"",
+      "created_at": "2026-06-28T13:52:16.689Z",
+      "id": 32
+    },
+    {
+      "user_id": 7,
+      "action": "Created task \"Design Figma CodeArena\"",
+      "created_at": "2026-06-28T13:52:36.207Z",
+      "id": 33
+    },
+    {
+      "user_id": 7,
+      "action": "Updated task \"Design Figma CodeArena\"",
+      "created_at": "2026-06-28T13:52:46.881Z",
+      "id": 34
+    },
+    {
+      "user_id": 7,
+      "action": "Started task \"Design Figma CodeArena\"",
+      "created_at": "2026-06-28T13:53:09.973Z",
+      "id": 35
+    },
+    {
+      "user_id": 7,
+      "action": "Created task \"Design Figma taskflow\"",
+      "created_at": "2026-06-28T13:53:33.508Z",
+      "id": 36
+    },
+    {
+      "user_id": 7,
+      "action": "Started task \"Design Figma taskflow\"",
+      "created_at": "2026-06-28T13:53:42.584Z",
+      "id": 37
+    },
+    {
+      "user_id": 7,
+      "action": "Created task \"Project section\"",
+      "created_at": "2026-06-28T13:53:58.418Z",
+      "id": 38
+    },
+    {
+      "user_id": 7,
+      "action": "Updated task \"Project section\"",
+      "created_at": "2026-06-28T13:54:07.543Z",
+      "id": 39
+    },
+    {
+      "user_id": 7,
+      "action": "Started task \"Project section\"",
+      "created_at": "2026-06-28T13:58:48.108Z",
+      "id": 40
+    },
+    {
+      "user_id": 7,
+      "action": "Created task \"Notification Mesaage\"",
+      "created_at": "2026-06-28T14:18:37.426Z",
+      "id": 41
+    },
+    {
+      "user_id": 7,
+      "action": "Started task \"Notification Mesaage\"",
+      "created_at": "2026-06-28T14:18:40.643Z",
+      "id": 42
+    },
+    {
+      "user_id": 7,
+      "action": "Created task \"Presentation Review\"",
+      "created_at": "2026-06-28T14:19:47.876Z",
+      "id": 43
+    },
+    {
+      "id": 44,
+      "user_id": 7,
+      "action": "Created project \"taskflow\"",
+      "created_at": "2026-06-29T11:14:41.038Z"
+    },
+    {
+      "id": 45,
+      "user_id": 7,
+      "action": "Created project \"Codearena\"",
+      "created_at": "2026-06-29T11:14:51.820Z"
+    },
+    {
+      "id": 46,
+      "user_id": 7,
+      "action": "Started task \"figma\"",
+      "created_at": "2026-06-29T11:18:36.693Z"
+    },
+    {
+      "id": 47,
+      "user_id": 7,
+      "action": "Completed task \"Project section\"",
+      "created_at": "2026-06-29T11:18:40.717Z"
+    },
+    {
+      "id": 48,
+      "user_id": 7,
+      "action": "Started task \"Project section\"",
+      "created_at": "2026-06-29T11:18:42.329Z"
+    }
+  ],
+  "workspaces": [
+    {
+      "id": 1,
+      "name": "Taskflow Team",
+      "invite_code": "TASKFLOW-7F3K9",
+      "created_by": 1,
+      "created_at": "2025-01-15T10:00:00.000Z"
+    },
+    {
+      "id": 2,
+      "name": "task",
+      "invite_code": "CWEU-4942",
+      "created_by": 5,
+      "created_at": "2026-06-28T19:51:40.410Z"
+    }
+  ],
+  "password_resets": [
+    {
+      "user_id": 5,
+      "token": "2144d4dbf166feb0c4077edf0a58aee4a2700f1d5117d0f28982d65eabbcc8a2",
+      "expires_at": "2026-06-28T20:53:09.462Z",
+      "created_at": "2026-06-28T19:53:09.463Z"
+    },
+    {
+      "user_id": 4,
+      "token": "ccaeebf9edec83ca47e07e29e9341082790c4ff86aa579386a172ec5051e516b",
+      "expires_at": "2026-06-28T22:11:34.429Z",
+      "created_at": "2026-06-28T21:11:34.432Z"
+    },
+    {
+      "user_id": 7,
+      "token": "13ff69853c4e9afe294924791414bed21e3128818f48f78969cee8f9b9048670",
+      "expires_at": "2026-06-29T12:17:28.584Z",
+      "created_at": "2026-06-29T11:17:28.586Z"
+    }
+  ],
+  "_nextId": {
+    "users": 8,
+    "tasks": 24,
+    "projects": 3,
+    "activity_log": 49,
+    "workspaces": 3
+  }
+}

@@ -1,18 +1,21 @@
 const express = require("express");
 const router  = express.Router();
 
-const { register, login, getMe, updateProfile, changePassword } = require("../controllers/authController");
+const { register, login, getMe, updateProfile, changePassword, getWorkspaceInfo, forgotPassword, resetPassword } = require("../controllers/authController");
 const { requireAdmin, getAllUsers, updateUserRole, deleteUser, getStats, getActivityLog } = require("../controllers/adminController");
 const auth = require("../middleware/authMiddleware");
 
 // Public
-router.post("/register", register);
-router.post("/login",    login);
+router.post("/register",        register);
+router.post("/login",           login);
+router.post("/forgot-password", forgotPassword);
+router.post("/reset-password",  resetPassword);
 
 // Authenticated
 router.get("/me",              auth, getMe);
 router.put("/profile",         auth, updateProfile);
 router.put("/change-password", auth, changePassword);
+router.get("/workspace",       auth, getWorkspaceInfo);
 
 // Admin
 router.get("/admin/stats",           auth, requireAdmin, getStats);
@@ -22,5 +25,3 @@ router.delete("/admin/users/:id",    auth, requireAdmin, deleteUser);
 router.get("/admin/activity",        auth, requireAdmin, getActivityLog);
 
 module.exports = router;
-
-
