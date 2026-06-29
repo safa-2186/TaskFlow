@@ -12,13 +12,13 @@ exports.getAllTasks = (req, res) => {
 
 // ── CREATE TASK ───────────────────────────────────────────
 exports.createTask = (req, res) => {
-  const { title, assignee, priority, due_date, status } = req.body;
+  const { title, assignee, priority, due_date, status, project_id } = req.body;
   const user_id = req.user.id;
 
   if (!title) return res.status(400).json({ error: "Title is required." });
 
   try {
-    const id = db.tasks.create({ title, user_id, assignee, priority, due_date, status });
+    const id = db.tasks.create({ title, user_id, assignee, priority, due_date, status, project_id: project_id || null });
     db.activity.log(user_id, `Created task "${title}"`);
     res.status(201).json({ id, title, status: status || "todo" });
   } catch (err) {
