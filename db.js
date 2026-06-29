@@ -93,7 +93,7 @@ const db = {
     findById(id) {
       return read().tasks.find(t => t.id === id) || null;
     },
-    create({ title, user_id, assignee, priority, due_date, status }) {
+    create({ title, user_id, assignee, priority, due_date, status, project_id }) {
       const d = read();
       const id = nextId(d, "tasks");
       const task = {
@@ -104,12 +104,13 @@ const db = {
         priority: priority || "Medium",
         assignee: assignee || "No one",
         due_date: due_date || null,
+        project_id: project_id || null,
         created_at: new Date().toISOString(),
       };
       d.tasks.push(task);
       write(d);
       return id;
-    },
+   },
     update(id, { title, status, assignee, priority, due_date }) {
       const d = read();
       const t = d.tasks.find(t => t.id === id);
@@ -151,6 +152,52 @@ const db = {
     },
     countDone() {
       return read().tasks.filter(t => t.status === "done").length;
+    },
+  },
+
+
+    // ── PROJECTS ─────────────────────────────────────────────
+  projects: {
+    findByUser(user_id) {
+      const d = read();
+      return d.projects.filter(p => p.user_id === user_id).map(p => ({
+        ...p,
+        task_count: d.tasks.filter(t => t.project_id === p.id).length,
+      }));
+    },
+    findById(id) {
+      return read().projects.find(p => p.id === id) || null;
+    },
+    create({ name, description, color, user_id }) {
+      const d = read();
+      const id = nextId(d, "projects");
+      const project = {
+        id, user_id, name,
+        description: description || "",
+        color: color || "#2563eb",
+        status: "active",
+        created_at: new Date().toISOString(),
+      };
+      d.projects.push(project);
+      write(d);
+      return id;
+    },
+    update(id, { name, description, color, status }) {
+      const d = read();
+      const p = d.projects.find(p => p.id === id);
+      if (p) {
+        p.name        = name        ?? p.name;
+        p.description = description ?? p.description;
+        p.color       = color       ?? p.color;
+        p.status      = status      ?? p.status;
+      }
+      write(d);
+    },
+    delete(id) {
+      const d = read();
+      d.projects = d.projects.filter(p => p.id !== id);
+      d.tasks = d.tasks.filter(t => t.project_id !== id);
+      write(d);
     },
   },
 
