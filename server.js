@@ -6,6 +6,7 @@ const path    = require("path");
 
 const taskRoutes = require("./routes/tasks");
 const authRoutes = require("./routes/authRoutes");
+const projectRoutes = require("./routes/projects");
 
 const app  = express();
 const PORT = process.env.PORT || 5000;
@@ -20,7 +21,8 @@ app.use(express.static(path.join(__dirname, "frontend")));
 // ── API ROUTES ────────────────────────────────────────────
 app.use("/tasks", taskRoutes);
 app.use("/users", authRoutes);       // frontend uses /users/login etc.
-app.use("/api/auth", authRoutes);    // clean API path
+app.use("/api/auth", authRoutes);
+app.use("/projects", projectRoutes);   // clean API path
 
 // ── SPA FALLBACK ──────────────────────────────────────────
 app.use((req, res) => {
