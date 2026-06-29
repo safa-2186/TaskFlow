@@ -17,7 +17,8 @@ exports.register = async (req, res) => {
       return res.status(409).json({ message: "An account with this email already exists." });
 
     const hashedPassword = await bcrypt.hash(password, 10);
-    db.users.create({ user_name, email, password: hashedPassword });
+    const newId = db.users.create({ user_name, email, password: hashedPassword });
+    db.activity.log(newId, `Registered account`);
 
     res.status(201).json({ message: "Account created successfully." });
   } catch (err) {
@@ -45,11 +46,14 @@ exports.login = async (req, res) => {
     if (!match)
       return res.status(401).json({ message: "Incorrect email/username or password." });
 
+    
     const token = jwt.sign(
       { id: user.id, user_name: user.user_name, role: user.role || "user" },
       process.env.JWT_SECRET || "taskflow_secret_dev",
       { expiresIn: "7d" }
     );
+
+    db.activity.log(user.id, `Logged in`);  // ← add this line
 
     res.status(200).json({
       message: "Login successful.",
