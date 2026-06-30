@@ -1,6 +1,3 @@
-// db.js — JSON file database (drop-in replacement for mysql2/promise)
-// Switch to MySQL later by replacing this file with the mysql2 version.
-
 const fs   = require("fs");
 const path = require("path");
 

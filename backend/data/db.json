@@ -677,6 +677,18 @@
       "user_id": 7,
       "action": "Started task \"Project section\"",
       "created_at": "2026-06-29T11:18:42.329Z"
+    },
+    {
+      "id": 49,
+      "user_id": 7,
+      "action": "Created project \"Codearena\"",
+      "created_at": "2026-06-29T13:55:52.642Z"
+    },
+    {
+      "id": 50,
+      "user_id": 7,
+      "action": "Deleted project \"Codearena\"",
+      "created_at": "2026-06-29T13:55:55.359Z"
     }
   ],
   "workspaces": [
@@ -718,8 +730,8 @@
   "_nextId": {
     "users": 8,
     "tasks": 24,
-    "projects": 3,
-    "activity_log": 49,
+    "projects": 4,
+    "activity_log": 51,
     "workspaces": 3
   }
 }

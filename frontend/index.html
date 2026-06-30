@@ -2228,6 +2228,7 @@
     let currentUser = null, currentUserEmail = null, currentWorkspaceName = '', isAdmin = false;
     let view = "Dashboard", settingsTab = "profile", adminTab = "users";
     let taskView = "kanban", taskFilter = "all", taskSearch = "";
+    let currentProjectId = null;
     let weeklyData = null;
     let chartInstance = null;
     const STATUSES = ["To Do", "In Progress", "Done"];
@@ -2731,7 +2732,7 @@
     </div>
     <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;">
       ${projects.map(p => `
-      <div class="panel" style="border-top:4px solid ${p.color};cursor:pointer;" onclick="openProjectDetail(${p.id})">
+      <div class="panel" style="border-top:4px solid ${p.color};cursor:pointer;" onclick="openProjectKanban(${p.id})">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;">
           <h3 style="font-size:16px;margin:0;">${escHtml(p.name)}</h3>
           <span class="tag">${p.status}</span>
@@ -2793,6 +2794,33 @@
         if (res.ok) { projects = projects.filter(p => p.id !== id); renderView(); }
         else { showAdminToast(data.message || 'Could not delete project.', true); }
       } catch (e) { showAdminToast('Cannot connect to server.', true); }
+    }
+    async function openProjectKanban(projectId) {
+      projectId = parseInt(projectId);
+      currentProjectId = projectId;
+      await loadProjects();
+      const p = projects.find(x => x.id === projectId);
+      if (!p) return;
+      view = "Tasks";
+      const title = $("#view-title"), sub = $("#view-sub"), body = $("#view-body");
+      title.textContent = p.name;
+      sub.textContent = p.description || "Project tasks";
+      body.innerHTML = `
+      <div class="fade" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+        <button onclick="currentProjectId=null;view='Projects';loadProjects().then(()=>{renderView()});" class="btn-ghost" style="font-size:13px;"><i class="fa-solid fa-arrow-left"></i> Back to Projects</button>
+        <div class="view-toggle">
+          <button class="vt-btn ${taskView==='kanban'?'active':''}" onclick="taskView='kanban';renderTasksBody()"><i class="fa-solid fa-table-columns"></i> Kanban</button>
+          <button class="vt-btn ${taskView==='list'?'active':''}" onclick="taskView='list';renderTasksBody()"><i class="fa-solid fa-list"></i> List</button>
+        </div>
+        <button onclick="openCreateModal()" class="btn-solid"><i class="fa-solid fa-plus"></i> New Task</button>
+      </div>
+      <div id="tasks-body"></div>`;
+      try {
+        const res = await fetch(`${API}/projects/${projectId}/tasks`, { headers: { "Authorization": `Bearer ${token()}` } });
+        const tasks = res.ok ? await res.json() : [];
+        board = formatTasks(tasks);
+      } catch(e) { board = { todo:[], doing:[], done:[] }; }
+      renderTasksBody();
     }
     function openProjectDetail(id) {
       const p = projects.find(x => x.id === id);
