@@ -32,7 +32,7 @@
       "user_name": "laila",
       "email": "lailaelberhichi@gmail.com",
       "password": "$2a$10$Mfm/JmOogUaJ5gkvijv45eIhfIVB9tNCU0lXt/gFycT3rR.e5lBG.",
-      "role": "user",
+      "role": "admin",
       "created_at": "2026-06-25T20:47:30.063Z",
       "workspace_id": 1
     },
@@ -41,7 +41,7 @@
       "user_name": "LAILA",
       "email": "laila.elberhichi.06@gmail.com",
       "password": "$2a$10$x07vOYeisw69E1a6tZ.0Z.h.zZfLidS7KH9oLgc9RpWgzUJBjbCzq",
-      "role": "user",
+      "role": "admin",
       "workspace_id": 2,
       "created_at": "2026-06-28T19:51:40.405Z"
     },
@@ -50,7 +50,7 @@
       "user_name": "safa",
       "email": "safa.bouguilime@gmail.com",
       "password": "$2a$10$y3YDMzijVi6DgeV0J4jsS.CRZju7Q6tqFT5./7w/ZknN1QmsxLxlW",
-      "role": "user",
+      "role": "admin",
       "created_at": "2026-06-25T14:56:01.591Z",
       "workspace_id": 1
     },
@@ -59,7 +59,7 @@
       "user_name": "Adam Tq",
       "email": "adamtq10@gmail.com",
       "password": "$2b$10$Dm5DK7SHjA1piCUlJsZRdOJWGhaGbdcsE5ALwMzvECXzkvUCBQn/y",
-      "role": "user",
+      "role": "admin",
       "created_at": "2026-06-28T11:27:54.649Z",
       "workspace_id": 1
     }
