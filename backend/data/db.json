@@ -82,7 +82,7 @@
       "title": "Design the Kanban board",
       "status": "done",
       "priority": "High",
-      "assignee": "Alice",
+      "assignee": "Adam",
       "due_date": "2025-01-25",
       "created_at": "2025-01-16T09:00:00.000Z",
       "workspace_id": 1
@@ -203,7 +203,7 @@
       "title": "Add admin panel",
       "status": "in_progress",
       "priority": "Medium",
-      "assignee": "Alice",
+      "assignee": "Hafssa",
       "due_date": "2026-07-10",
       "created_at": "2025-01-18T12:00:00.000Z",
       "workspace_id": 1
@@ -214,7 +214,7 @@
       "title": "Write documentation",
       "status": "todo",
       "priority": "Low",
-      "assignee": "Bob",
+      "assignee": "Laila",
       "due_date": "2026-07-20",
       "created_at": "2025-01-19T15:00:00.000Z",
       "workspace_id": 1
@@ -649,7 +649,7 @@
       "id": 43
     },
     {
-      "id": 44, 
+      "id": 44,
       "user_id": 7,
       "action": "Created project \"taskflow\"",
       "created_at": "2026-06-29T11:14:41.038Z"
@@ -689,6 +689,24 @@
       "user_id": 7,
       "action": "Deleted project \"Codearena\"",
       "created_at": "2026-06-29T13:55:55.359Z"
+    },
+    {
+      "id": 51,
+      "user_id": 7,
+      "action": "Started task \"Add admin panel\"",
+      "created_at": "2026-06-30T12:45:11.367Z"
+    },
+    {
+      "id": 52,
+      "user_id": 7,
+      "action": "Updated task \"Write documentation\"",
+      "created_at": "2026-06-30T12:45:31.906Z"
+    },
+    {
+      "id": 53,
+      "user_id": 7,
+      "action": "Completed task \"Design the Kanban board\"",
+      "created_at": "2026-06-30T12:45:42.151Z"
     }
   ],
   "workspaces": [
@@ -731,7 +749,7 @@
     "users": 8,
     "tasks": 24,
     "projects": 4,
-    "activity_log": 51,
+    "activity_log": 54,
     "workspaces": 3
   }
 }
