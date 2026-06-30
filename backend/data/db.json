@@ -297,17 +297,6 @@
       "workspace_id": 1
     },
     {
-      "id": 22,
-      "user_id": 7,
-      "title": "Notification Mesaage",
-      "status": "in_progress",
-      "priority": "Medium",
-      "assignee": "Laila",
-      "due_date": "2026-06-29",
-      "created_at": "2026-06-28T14:18:37.424Z",
-      "workspace_id": 1
-    },
-    {
       "id": 23,
       "user_id": 7,
       "title": "Presentation Review",
@@ -343,28 +332,16 @@
       "created_at": "2026-06-29T22:55:42.864Z"
     },
     {
-      "id": 26,
+      "id": 24,
       "user_id": 4,
       "workspace_id": 1,
       "project_id": null,
-      "title": "planification",
-      "status": "in_progress",
-      "priority": "Medium",
-      "assignee": "No one",
-      "due_date": "2026-06-30",
-      "created_at": "2026-06-29T22:57:43.640Z"
-    },
-    {
-      "id": 27,
-      "user_id": 4,
-      "workspace_id": 1,
-      "project_id": null,
-      "title": "desigh",
-      "status": "in_progress",
+      "title": "hgfsr",
+      "status": "todo",
       "priority": "Medium",
       "assignee": "No one",
       "due_date": null,
-      "created_at": "2026-06-29T22:58:19.130Z"
+      "created_at": "2026-06-30T14:31:44.594Z"
     }
   ],
   "projects": [
@@ -698,15 +675,21 @@
     },
     {
       "id": 52,
-      "user_id": 7,
-      "action": "Updated task \"Write documentation\"",
-      "created_at": "2026-06-30T12:45:31.906Z"
+      "user_id": 4,
+      "action": "Deleted task \"planification\"",
+      "created_at": "2026-06-30T14:31:30.534Z"
     },
     {
       "id": 53,
       "user_id": 7,
       "action": "Completed task \"Design the Kanban board\"",
       "created_at": "2026-06-30T12:45:42.151Z"
+    },
+    {
+      "id": 54,
+      "user_id": 4,
+      "action": "Deleted task \"desigh\"",
+      "created_at": "2026-06-30T14:31:29.101Z"
     }
   ],
   "workspaces": [
@@ -747,9 +730,9 @@
   ],
   "_nextId": {
     "users": 8,
-    "tasks": 24,
+    "tasks": 27,
     "projects": 4,
-    "activity_log": 54,
+    "activity_log": 58,
     "workspaces": 3
   }
 }
