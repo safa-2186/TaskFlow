@@ -2364,25 +2364,49 @@
         });
 
       } else if (view === "Tasks") {
-        title.textContent = "Tasks";
-        sub.textContent = "Switch between Kanban and List view. Drag, filter, search.";
-        body.innerHTML = `
-      <div class="fade" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
-        <div class="view-toggle">
-          <button class="vt-btn ${taskView === 'kanban' ? 'active' : ''}" onclick="taskView='kanban';renderTasksBody()"><i class="fa-solid fa-table-columns"></i> Kanban</button>
-          <button class="vt-btn ${taskView === 'list' ? 'active' : ''}" onclick="taskView='list';renderTasksBody()"><i class="fa-solid fa-list"></i> List</button>
-        </div>
-        <div class="search-bar" style="flex:1;min-width:180px;max-width:340px;margin-bottom:0;">
-          <i class="fa-solid fa-magnifying-glass" style="color:var(--dim);font-size:13px;"></i>
-          <input placeholder="Search tasks…" id="task-search" oninput="taskSearch=this.value;renderTasksBody()" value="${taskSearch}">
-        </div>
-        <button onclick="openCreateModal()" class="btn-solid" style="display:flex;align-items:center;gap:7px;"><i class="fa-solid fa-plus"></i> New Task</button>
-      </div>
-      <div class="filter-bar fade" id="filter-bar">
-        ${['all', 'todo', 'in_progress', 'done', 'High', 'Medium', 'Low'].map(f => `<button class="filter-chip ${taskFilter === f ? 'active' : ''}" onclick="taskFilter='${f}';renderTasksBody();$$('.filter-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">${filterLabel(f)}</button>`).join('')}
-      </div>
-      <div id="tasks-body"></div>`;
-        loadTasks().then(tasks => { if (tasks) board = formatTasks(tasks); renderTasksBody(); });
+  title.textContent = "Tasks";
+  sub.textContent = "Switch between Kanban and List view. Drag, filter, search.";
+  body.innerHTML = `
+<div class="fade" style="display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+  <select id="project-selector" onchange="onProjectSelect(this.value)" style="padding:7px 12px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:13px;cursor:pointer;">
+    <option value="all">All Projects</option>
+  </select>
+  <div class="view-toggle">
+    <button class="vt-btn ${taskView === 'kanban' ? 'active' : ''}" onclick="taskView='kanban';renderTasksBody()"><i class="fa-solid fa-table-columns"></i> Kanban</button>
+    <button class="vt-btn ${taskView === 'list' ? 'active' : ''}" onclick="taskView='list';renderTasksBody()"><i class="fa-solid fa-list"></i> List</button>
+  </div>
+  <div class="search-bar" style="flex:1;min-width:180px;max-width:340px;margin-bottom:0;">
+    <i class="fa-solid fa-magnifying-glass" style="color:var(--dim);font-size:13px;"></i>
+    <input placeholder="Search tasks…" id="task-search" oninput="taskSearch=this.value;renderTasksBody()" value="${taskSearch}">
+  </div>
+  <button onclick="openCreateModal()" class="btn-solid" style="display:flex;align-items:center;gap:7px;"><i class="fa-solid fa-plus"></i> New Task</button>
+</div>
+<div class="filter-bar fade" id="filter-bar">
+  ${['all', 'todo', 'in_progress', 'done', 'High', 'Medium', 'Low'].map(f => `<button class="filter-chip ${taskFilter === f ? 'active' : ''}" onclick="taskFilter='${f}';renderTasksBody();$$('.filter-chip').forEach(c=>c.classList.remove('active'));this.classList.add('active')">${filterLabel(f)}</button>`).join('')}
+</div>
+<div id="tasks-body"></div>`;
+  loadProjects().then(data => {
+    if (data) {
+      projects = data;
+      const sel = document.getElementById('project-selector');
+      if (sel) {
+        projects.forEach(p => {
+          const opt = document.createElement('option');
+          opt.value = p.id;
+          opt.textContent = p.name;
+          if (currentProjectId && currentProjectId === p.id) opt.selected = true;
+          sel.appendChild(opt);
+        });
+      }
+    }
+  });
+  if (currentProjectId) {
+    fetch(`${API}/projects/${currentProjectId}/tasks`, { headers: { "Authorization": `Bearer ${token()}` } })
+      .then(r => r.ok ? r.json() : [])
+      .then(tasks => { board = formatTasks(tasks); renderTasksBody(); });
+  } else {
+    loadTasks().then(tasks => { if (tasks) board = formatTasks(tasks); renderTasksBody(); });
+  }
 
       } else if (view === "Projects") {
         title.textContent = "Projects";
@@ -2567,7 +2591,7 @@
       <div class="k-head">
         <span class="dot" style="background:${col.accent}"></span>
         <h3>${col.title}</h3>
-        <span class="count">${board[col.id].length}</span>
+        <span class="count">${tasks.length}</span>
       </div>
       <div class="k-cards" id="cards-${col.id}"></div>
       <input class="k-input" placeholder="+ Add a task, press Enter" id="input-${col.id}" />`;
@@ -2615,7 +2639,7 @@
           const text = input.value.trim(); if (!text) return;
           const defAssignee = loadPrefs().defaultAssignee || "No one";
           try {
-            const res = await fetch(`${API}/tasks`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ title: text, status: col.id === "doing" ? "in_progress" : col.id, assignee: defAssignee, priority: "Medium" }) });
+            const res = await fetch(`${API}/tasks`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ title: text, status: col.id === "doing" ? "in_progress" : col.id, assignee: defAssignee, priority: "Medium", project_id: currentProjectId || null }) });
             const data = await res.json();
             board[col.id].push({ id: data.id || ("b" + bid++), text, desc: "", priority: "Medium", assignee: defAssignee, due: "" });
           } catch (er) { board[col.id].push({ id: "b" + bid++, text, desc: "", priority: "Medium", assignee: defAssignee, due: "" }); }
@@ -2692,7 +2716,7 @@
         const targetCol = $("#m-status").value;
         if (isCreate) {
           try {
-            const res = await fetch(`${API}/tasks`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ title: newText, status: targetCol === "doing" ? "in_progress" : targetCol, assignee: newAssign, priority: newPrio, due_date: newDue || null }) });
+            const res = await fetch(`${API}/tasks`, { method: "POST", headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token()}` }, body: JSON.stringify({ title: newText, status: targetCol === "doing" ? "in_progress" : targetCol, assignee: newAssign, priority: newPrio, due_date: newDue || null, project_id: currentProjectId || null }) });
             const data = await res.json();
             board[targetCol].push({ id: data.id || ("b" + bid++), text: newText, desc: newDesc, priority: newPrio, assignee: newAssign, due: newDue });
           } catch (e) { board[targetCol].push({ id: "b" + bid++, text: newText, desc: newDesc, priority: newPrio, assignee: newAssign, due: newDue }); }
@@ -2822,6 +2846,20 @@
       } catch(e) { board = { todo:[], doing:[], done:[] }; }
       renderTasksBody();
     }
+    async function onProjectSelect(value) {
+  if (value === 'all') {
+    currentProjectId = null;
+    const tasks = await loadTasks();
+    if (tasks) board = formatTasks(tasks);
+  } else {
+    currentProjectId = parseInt(value);
+    const res = await fetch(`${API}/projects/${currentProjectId}/tasks`, { headers: { "Authorization": `Bearer ${token()}` } });
+    const tasks = res.ok ? await res.json() : [];
+    board = formatTasks(tasks);
+  }
+  renderTasksBody();
+}
+
     function openProjectDetail(id) {
       const p = projects.find(x => x.id === id);
       if (!p) return;
